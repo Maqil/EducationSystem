@@ -1,0 +1,40 @@
+type Query {
+    fetchAllStudents:[Student]
+    fetchStudentById(studentAiid:Int!):Student
+    fetchStudentByName(fullName:String!):[Student]
+}
+
+
+#type Mutation {
+#    addStudent(fullName: String!,email: String!,phone: String!,todoInput: TodoInput!): Student
+#}
+
+type Mutation {
+    addStudent(student : StudentInput): Student
+}
+
+input StudentInput {
+    studentAiid : ID
+    fullName : String
+    email : String
+    phone : String
+    todos : TodoInput
+}
+
+input TodoInput {
+    todoAiid : ID,
+    description : String
+}
+
+type Student {
+    studentAiid : ID
+    fullName : String
+    email : String
+    phone : String,
+    todos : Todo
+}
+
+type Todo {
+    todoAiid : ID,
+    description : String
+}
