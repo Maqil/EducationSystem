@@ -1,6 +1,11 @@
-package com.school.entities;
+package com.school.graphqlInput;
 
+import com.school.entities.Professor;
+import com.school.entities.Student;
+import com.school.entities.Todo;
 import lombok.*;
+
+import java.util.Collection;
 
 @Getter
 @Setter

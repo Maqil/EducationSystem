@@ -1,16 +1,27 @@
 type Query {
+    fetchAllProfessors:[Professor]
+    fetchProfessorById(professorAiid:Int!):Professor
+    fetchProfessorByName(fullName:String!):[Professor]
+
     fetchAllStudents:[Student]
     fetchStudentById(studentAiid:Int!):Student
     fetchStudentByName(fullName:String!):[Student]
+
+    fetchAllTodos:[Todo]
+    fetchTodoById(todoAiid:Int!):Todo
 }
-
-
-#type Mutation {
-#    addStudent(fullName: String!,email: String!,phone: String!,todoInput: TodoInput!): Student
-#}
 
 type Mutation {
     addStudent(student : StudentInput): Student
+    addProfessor(Professor : ProfessorInput): Professor
+#    addTodo(Todo : TodoInput): Todo
+}
+
+input ProfessorInput {
+    professorAiid : ID
+    fullName : String
+    email : String
+    phone : String
 }
 
 input StudentInput {
@@ -18,12 +29,20 @@ input StudentInput {
     fullName : String
     email : String
     phone : String
-    todos : TodoInput
+    todos : [TodoInput]
 }
 
 input TodoInput {
-    todoAiid : ID,
+    todoAiid : ID
     description : String
+#    professor : ProfessorInput
+}
+
+type Professor {
+    professorAiid : ID
+    fullName : String
+    email : String
+    phone : String,
 }
 
 type Student {
@@ -31,10 +50,11 @@ type Student {
     fullName : String
     email : String
     phone : String,
-    todos : Todo
+    todos : [Todo]
 }
 
 type Todo {
     todoAiid : ID,
     description : String
+    professor : Professor
 }

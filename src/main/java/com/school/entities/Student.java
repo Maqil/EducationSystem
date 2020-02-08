@@ -4,6 +4,7 @@ package com.school.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Student {
 
     @Id
@@ -19,6 +21,7 @@ public class Student {
     private String fullName;
     private String email;
     private String phone;
-    @ManyToOne
-    private Todo todos;
+
+    @ManyToMany
+    private Collection<Todo> todos;
 }

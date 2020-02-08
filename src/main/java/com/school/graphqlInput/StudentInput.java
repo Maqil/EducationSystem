@@ -1,6 +1,10 @@
-package com.school.entities;
+package com.school.graphqlInput;
 
+import com.school.entities.Student;
+import com.school.entities.Todo;
 import lombok.*;
+
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -12,7 +16,7 @@ public class StudentInput {
     private String fullName;
     private String email;
     private String phone;
-    private Todo todos;
+    private Collection<Todo> todos;
 
     public Student toStudent(){
         return Student.builder().studentAiid(this.studentAiid).fullName(this.fullName).email(this.email).phone(this.phone).todos(this.todos).build();
