@@ -1,11 +1,9 @@
 package com.school.entities;
 
-
 import com.school.repository.StudentRepository;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -15,15 +13,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Student {
+public class Grade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer studentAiid;
-    private String fullName;
-    private String email;
-    private String phone;
+    private Integer gradeAiid;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "grade")
     private Set<StudentGrade> registrations;
+
 }

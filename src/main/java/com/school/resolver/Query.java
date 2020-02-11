@@ -1,12 +1,8 @@
 package com.school.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.school.entities.Professor;
-import com.school.entities.Todo;
-import com.school.repository.ProfessorRepository;
-import com.school.repository.StudentRepository;
-import com.school.entities.Student;
-import com.school.repository.TodoRepository;
+import com.school.entities.*;
+import com.school.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +13,15 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     ProfessorRepository professorRepository;
     @Autowired
+    TodoRepository todoRepository;
+    @Autowired
     StudentRepository studentRepository;
     @Autowired
-    TodoRepository todoRepository;
+    GradeRepository gradeRepository;
+    @Autowired
+    SubjectRepository subjectRepository;
+    @Autowired
+    StdGrdSbjTdRepository stdGrdSbjTd;
 
     //    Professor
     public List<Professor> fetchAllProfessors() {
@@ -32,6 +34,15 @@ public class Query implements GraphQLQueryResolver {
 
     public List<Professor> fetchProfessorByName(String name) {
         return professorRepository.findByFullNameContains(name);
+    }
+
+    //    Todo
+    public List<Todo> fetchAllTodos() {
+        return todoRepository.findAll();
+    }
+
+    public Todo fetchTodoById(Integer id) {
+        return todoRepository.findById(id).get();
     }
 
     //    Student
@@ -47,12 +58,35 @@ public class Query implements GraphQLQueryResolver {
         return studentRepository.findByFullNameContains(name);
     }
 
-    //    Todo
-    public List<Todo> fetchAllTodos() {
-        return todoRepository.findAll();
+    //    Grade
+    public List<Grade> fetchAllGrades() {
+        return gradeRepository.findAll();
     }
 
-    public Todo fetchTodoById(Integer id) {
-        return todoRepository.findById(id).get();
+    public Grade fetchGradeById(Integer id) {
+        return gradeRepository.findById(id).get();
     }
+
+    //    Subject
+    public List<Subject> fetchAllSubjects() {
+        return subjectRepository.findAll();
+    }
+
+    public Subject fetchSubjectById(Integer id) {
+        return subjectRepository.findById(id).get();
+    }
+
+    public List<Subject> fetchSubjectByName(String name) {
+        return subjectRepository.findBySubjectNameContains(name);
+    }
+
+    //    StdGrdSbjTd
+    public List<StdGrdSbjTd> fetchAllStdGrdSbjTds() {
+        return stdGrdSbjTd.findAll();
+    }
+
+    public StdGrdSbjTd fetchStdGrdSbjTdById(Integer id) {
+        return stdGrdSbjTd.findById(id).get();
+    }
+
 }

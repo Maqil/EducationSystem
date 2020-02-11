@@ -22,7 +22,7 @@ public class Professor {
     private String email;
     private String phone;
 
-    @OneToMany(mappedBy = "professor")
+    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<Todo> todos;
 }

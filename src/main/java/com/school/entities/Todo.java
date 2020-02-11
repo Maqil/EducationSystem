@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,17 +22,13 @@ public class Todo {
     @ManyToOne
     private Professor professor;
 
+    @OneToMany(mappedBy = "todo", fetch = FetchType.EAGER)
+    private Set<StdGrdSbjTd> todos;
+
 //    @OneToMany(mappedBy = "todos")
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "todos")
-    private Collection<Student> students;
-
-
-    public Todo(Integer todoAiid, String description, Professor professor) {
-        this.todoAiid = todoAiid;
-        this.description = description;
-        this.professor = professor;
-    }
+//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "todos")
+//    private Collection<Student> students;
 
 }
