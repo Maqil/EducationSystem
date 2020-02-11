@@ -19,9 +19,9 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     GradeRepository gradeRepository;
     @Autowired
-    SubjectRepository subjectRepository;
+    StudentGradeRepository studentGradeRepository;
     @Autowired
-    StdGrdSbjTdRepository stdGrdSbjTd;
+    SubjectRepository subjectRepository;
 
     //    Professor
     public List<Professor> fetchAllProfessors() {
@@ -67,6 +67,15 @@ public class Query implements GraphQLQueryResolver {
         return gradeRepository.findById(id).get();
     }
 
+    //    StudentGrade
+    public List<StudentGrade> fetchAllStudentGrades() {
+        return studentGradeRepository.findAll();
+    }
+
+    public StudentGrade fetchStudentGradeById(Integer id) {
+        return studentGradeRepository.findById(id).get();
+    }
+
     //    Subject
     public List<Subject> fetchAllSubjects() {
         return subjectRepository.findAll();
@@ -80,13 +89,5 @@ public class Query implements GraphQLQueryResolver {
         return subjectRepository.findBySubjectNameContains(name);
     }
 
-    //    StdGrdSbjTd
-    public List<StdGrdSbjTd> fetchAllStdGrdSbjTds() {
-        return stdGrdSbjTd.findAll();
-    }
-
-    public StdGrdSbjTd fetchStdGrdSbjTdById(Integer id) {
-        return stdGrdSbjTd.findById(id).get();
-    }
 
 }

@@ -21,5 +21,4 @@ public class Grade {
 
     @OneToMany(mappedBy = "grade")
     private Set<StudentGrade> registrations;
-
 }

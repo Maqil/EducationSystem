@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Setter
 @Entity
@@ -22,7 +23,9 @@ public class Professor {
     private String email;
     private String phone;
 
+    @ManyToMany
+    private Set<Subject> subjects;
+
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<Todo> todos;
 }

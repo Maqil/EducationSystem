@@ -10,18 +10,15 @@ type Query {
     fetchStudentById(studentAiid:Int!):Student
     fetchStudentByName(fullName:String!):[Student]
 
+    fetchAllStudentGrades:[StudentGrade]
+    fetchStudentGradeById(id:Int!):StudentGrade
+
     fetchAllGrades:[Grade]
     fetchGradeById(GradeAiid:Int!):Grade
 
     fetchAllSubjects:[Subject]
     fetchSubjectById(subjectAiid:Int!):Subject
     fetchSubjectByName(name:String!):[Subject]
-
-#    fetchAllStudentGradeSubjects:[StudentGradeSubject]
-#    fetchSubjectById(studentAiid:Int!):StudentGradeSubject
-
-    fetchAllStdGrdSbjTds:[StdGrdSbjTd]
-    fetchStdGrdSbjTdById(stdGrdSbjTdAiid:Int!):StdGrdSbjTd
 }
 
 type Professor {
@@ -49,50 +46,44 @@ type Student {
 type Grade {
     gradeAiid : ID
 }
-
+#
 type StudentGrade {
-    stdGradeAiid : ID
+    registrationAiid : ID
+    student : Student
+    grade : Grade
+    subjects : [Subject]
 }
 
 type Subject {
     subjectAiid : ID
     subjectName : String
+    professors : [Professor]
 }
 
-type StdGrdSbjTd {
-    stdGrdSbjTdAiid : ID
-    todo : Todo
-    stdGradeSubject : StudentGradeSubject
-}
-
-type StudentGradeSubject {
-    stdGradeSubjectAiid : ID
-}
-
-#type Mutation {
-#    addStudent(student : StudentInput): Student
-#    addProfessor(Professor : ProfessorInput): Professor
-##    addTodo(Todo : TodoInput): Todo
-#}
+##type Mutation {
+##    addStudent(student : StudentInput): Student
+##    addProfessor(Professor : ProfessorInput): Professor
+###    addTodo(Todo : TodoInput): Todo
+##}
+##
+##input ProfessorInput {
+##    professorAiid : ID
+##    fullName : String
+##    email : String
+##    phone : String
+##}
+##
+##input StudentInput {
+##    studentAiid : ID
+##    fullName : String
+##    email : String
+##    phone : String
+##    todos : [TodoInput]
+##}
+##
+##input TodoInput {
+##    todoAiid : ID
+##    description : String
+###    professor : ProfessorInput
+##}
 #
-#input ProfessorInput {
-#    professorAiid : ID
-#    fullName : String
-#    email : String
-#    phone : String
-#}
-#
-#input StudentInput {
-#    studentAiid : ID
-#    fullName : String
-#    email : String
-#    phone : String
-#    todos : [TodoInput]
-#}
-#
-#input TodoInput {
-#    todoAiid : ID
-#    description : String
-##    professor : ProfessorInput
-#}
-

@@ -16,7 +16,7 @@ import java.util.Set;
 public class StudentGrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer stdGradeAiid;
+    private Integer registrationAiid;
 
     @ManyToOne
     private Student student;
@@ -24,6 +24,6 @@ public class StudentGrade {
     @ManyToOne
     private Grade grade;
 
-    @OneToMany(mappedBy = "studentGrade")
-    private Set<StudentGradeSubject> enrollment;
+    @ManyToMany(mappedBy = "stdGrades", fetch = FetchType.EAGER)
+    private Set<Subject> subjects;
 }
