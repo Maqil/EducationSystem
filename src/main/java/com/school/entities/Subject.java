@@ -23,9 +23,15 @@ public class Subject {
 //    @ManyToMany
 //    private Set<StudentGrade> stdGrades;
 
-    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
-    private Set<Professor> professors;
+//    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
+//    private Set<Professor> professors;
 
-    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
-    private Set<Enrollment> enrollments;
+//    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
+//    private Set<Enrollment> enrollments;
+
+    @OneToMany(mappedBy = "subject", cascade = {CascadeType.ALL})
+    private Set<Todo> todos;
+
+    @ManyToOne
+    private Admin admin;
 }

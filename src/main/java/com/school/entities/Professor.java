@@ -23,9 +23,12 @@ public class Professor {
     private String email;
     private String phone;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Subject> subjects;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private Set<Subject> subjects;
 
-    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
-    private Collection<Todo> todos;
+    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Todo> todos;
+
+    @ManyToOne
+    private Admin admin;
 }

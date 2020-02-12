@@ -1,4 +1,6 @@
 type Query {
+    fetchAllAdmins:[Admin]
+
     fetchAllProfessors:[Professor]
     fetchProfessorById(id:Int!):Professor
     fetchProfessorByName(fullName:String!):[Professor]
@@ -21,19 +23,29 @@ type Query {
     fetchSubjectByName(name:String!):[Subject]
 }
 
+type Admin {
+    adminAiid : ID
+    adminName : String
+    professorSet: [Professor]
+    studentSet : [Student]
+    subjectSet : [Subject]
+    gradeSet : [Grade]
+}
+
 type Professor {
     professorAiid : ID
     fullName : String
     email : String
     phone : String
     todos : [Todo]
-    subjects : [Subject]
+    #    subjects : [Subject]
 }
 
 type Todo {
     todoAiid : ID,
     description : String
     professor : Professor
+    subject : Subject
 }
 
 type Student {
@@ -48,7 +60,8 @@ type StudentGrade {
     registrationAiid : ID
     student : Student
     grade : Grade
-    enrollments : [Enrollment]
+    assignments : [Assignment]
+    #    enrollments : [Enrollment]
 }
 
 type Grade {
@@ -56,24 +69,23 @@ type Grade {
     gradeName : String
 }
 
-type Enrollment {
-    enrollmentAiid : ID
-    studentGrade : StudentGrade
-    subject : Subject
-    assignments : [Assignment]
-}
+#type Enrollment {
+#    enrollmentAiid : ID
+#    studentGrade : StudentGrade
+#    subject : Subject
+#    assignments : [Assignment]
+#}
 
 type Subject {
     subjectAiid : ID
     subjectName : String
-    professors : [Professor]
-    enrollments : [Enrollment]
-
+    #    professors : [Professor]
+    #    enrollments : [Enrollment]
 }
 
 type Assignment {
     assignementAiid : ID
-    enrollment : Enrollment
+    #    enrollment : Enrollment
     todo : Todo
     isDone : Boolean
 }
@@ -81,6 +93,7 @@ type Assignment {
 type Mutation {
     addStudent(student : StudentInput): Student
     addProfessor(professor : ProfessorInput): Professor
+    addSubject(subject : SubjectInput): Subject
     addGrade(grade : GradeInput): Grade
     addTodo(todo : TodoInput): Todo
 }
@@ -102,8 +115,14 @@ input GradeInput {
     gradeName : String
 }
 
+input SubjectInput {
+    subjectAiid : ID
+    subjectName : String
+}
+
 input TodoInput {
     todoAiid : ID
     description : String
-    #    professor : ProfessorInput
+#    professor : ProfessorInput
+#    subject : SubjectInput
 }

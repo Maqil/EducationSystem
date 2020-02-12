@@ -26,4 +26,7 @@ public class Student {
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
     private Set<StudentGrade> registrations;
+
+    @ManyToOne
+    private Admin admin;
 }

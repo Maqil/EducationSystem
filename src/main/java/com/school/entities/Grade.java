@@ -23,4 +23,7 @@ public class Grade {
 
     @OneToMany(mappedBy = "grade")
     private Set<StudentGrade> registrations;
+
+    @ManyToOne
+    private Admin admin;
 }

@@ -2,19 +2,10 @@ package com.school.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 
-import com.school.entities.Grade;
-import com.school.entities.Professor;
-import com.school.entities.Todo;
-import com.school.graphqlInput.GradeInput;
-import com.school.graphqlInput.ProfessorInput;
-import com.school.graphqlInput.StudentInput;
-import com.school.graphqlInput.TodoInput;
-import com.school.repository.GradeRepository;
-import com.school.repository.ProfessorRepository;
-import com.school.repository.StudentRepository;
-import com.school.entities.Student;
+import com.school.entities.*;
+import com.school.graphqlInput.*;
+import com.school.repository.*;
 
-import com.school.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +17,8 @@ public class Mutation implements GraphQLMutationResolver {
     StudentRepository studentRepository;
     @Autowired
     GradeRepository gradeRepository;
+    @Autowired
+    SubjectRepository subjectRepository;
     @Autowired
     TodoRepository todoRepository;
 
@@ -39,6 +32,10 @@ public class Mutation implements GraphQLMutationResolver {
 
     public Grade addGrade(GradeInput gradeInput) {
         return gradeRepository.save(gradeInput.toGrade());
+    }
+
+    public Subject addSubject(SubjectInput subjectInput) {
+        return subjectRepository.save(subjectInput.toSubject());
     }
 
     public Todo addTodo(TodoInput todoInput) {

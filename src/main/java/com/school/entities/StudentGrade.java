@@ -27,5 +27,5 @@ public class StudentGrade {
 //    private Set<Subject> subjects;
 
     @OneToMany(mappedBy = "studentGrade", fetch = FetchType.EAGER)
-    private Set<Enrollment> enrollments;
+    private Set<Assignment> assignments;
 }

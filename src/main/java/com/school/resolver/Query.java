@@ -11,6 +11,8 @@ import java.util.List;
 @Component
 public class Query implements GraphQLQueryResolver {
     @Autowired
+    AdminRepository adminRepository;
+    @Autowired
     ProfessorRepository professorRepository;
     @Autowired
     TodoRepository todoRepository;
@@ -22,6 +24,11 @@ public class Query implements GraphQLQueryResolver {
     StudentGradeRepository studentGradeRepository;
     @Autowired
     SubjectRepository subjectRepository;
+
+    //    Admin
+    public List<Admin> fetchAllAdmins (){
+        return adminRepository.findAll();
+    }
 
     //    Professor
     public List<Professor> fetchAllProfessors() {

@@ -22,6 +22,9 @@ public class Todo {
     @ManyToOne
     private Professor professor;
 
+    @ManyToOne
+    private Subject subject;
+
     @OneToMany(mappedBy = "todo", fetch = FetchType.EAGER)
     private Set<Assignment> assignments;
 }
