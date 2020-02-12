@@ -16,9 +16,8 @@ public class StudentInput {
     private String fullName;
     private String email;
     private String phone;
-    private Collection<Todo> todos;
-//
-//    public Student toStudent(){
-//        return Student.builder().studentAiid(this.studentAiid).fullName(this.fullName).email(this.email).phone(this.phone).todos(this.todos).build();
-//    }
+
+    public Student toStudent(){
+        return Student.builder().studentAiid(this.studentAiid).fullName(this.fullName).email(this.email).phone(this.phone).build();
+    }
 }

@@ -17,13 +17,17 @@ public class DemoApplication implements CommandLineRunner {
     @Autowired
     GradeRepository gradeRepository;
     @Autowired
+    SubjectRepository subjectRepository;
+    @Autowired
     StudentGradeRepository studentGradeRepository;
     @Autowired
-    SubjectRepository subjectRepository;
+    EnrollmentRepository enrollmentRepository;
     @Autowired
     ProfessorRepository professorRepository;
     @Autowired
     TodoRepository todoRepository;
+    @Autowired
+    AssignmentRepository assignmentRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
@@ -36,9 +40,18 @@ public class DemoApplication implements CommandLineRunner {
         Student s2 = studentRepository.save(new Student(null, "Wert Jelly", "Jelly@gmail.com", "+212233445", null));
         Student s3 = studentRepository.save(new Student(null, "bart Simpson", "simpson@gmail.com", "+212453445", null));
 
-        Grade g1 = gradeRepository.save(new Grade(null, null));
-        Grade g2 = gradeRepository.save(new Grade(null, null));
-        Grade g3 = gradeRepository.save(new Grade(null, null));
+        Grade g1 = gradeRepository.save(new Grade(null, "CP", null));
+        Grade g2 = gradeRepository.save(new Grade(null, "CE1", null));
+        Grade g3 = gradeRepository.save(new Grade(null, "CE2", null));
+
+        Subject sbj1 = subjectRepository.save(new Subject(null, "Fr1", null, null));
+        Subject sbj2 = subjectRepository.save(new Subject(null, "Math1", null, null));
+        Subject sbj3 = subjectRepository.save(new Subject(null, "Bio1", null, null));
+
+        Set<Subject> listSbj = new HashSet<Subject>();
+        listSbj.add(sbj1);
+        listSbj.add(sbj2);
+        listSbj.add(sbj3);
 
         StudentGrade stdGrd1 = studentGradeRepository.save(new StudentGrade(null, s1, g1, null));
         StudentGrade stdGrd2 = studentGradeRepository.save(new StudentGrade(null, s2, g1, null));
@@ -49,29 +62,32 @@ public class DemoApplication implements CommandLineRunner {
         listStdGrd.add(stdGrd2);
         listStdGrd.add(stdGrd3);
 
-        Subject sbj1 = subjectRepository.save(new Subject(null, "Fr1", listStdGrd, null));
-        Subject sbj2 = subjectRepository.save(new Subject(null, "Math1", listStdGrd, null));
-        Subject sbj3 = subjectRepository.save(new Subject(null, "Bio1", listStdGrd, null));
-
-        Set<Subject> listSbj = new HashSet<Subject>();
-        listSbj.add(sbj1);
-        listSbj.add(sbj2);
-        listSbj.add(sbj3);
+        Enrollment enrollment1 = enrollmentRepository.save(new Enrollment(null, stdGrd1, sbj1, null));
+        Enrollment enrollment2 = enrollmentRepository.save(new Enrollment(null, stdGrd1, sbj2, null));
+        Enrollment enrollment3 = enrollmentRepository.save(new Enrollment(null, stdGrd2, sbj3, null));
 
         Professor p1 = professorRepository.save(new Professor(null, "Johna smith", "John@gmail.com", "+2125445", listSbj, null));
         Professor p2 = professorRepository.save(new Professor(null, "aicha curry", "curry@gmail.com", "+2125445", listSbj, null));
         Professor p3 = professorRepository.save(new Professor(null, "steve harr", "harr@gmail.com", "+2125445", listSbj, null));
 
-        Todo t1 = todoRepository.save(new Todo(null, "Read 5 pages", p1));
-        Todo t2 = todoRepository.save(new Todo(null, "Read 6 pages", p2));
-        Todo t3 = todoRepository.save(new Todo(null, "Read 8 pages", p1));
-        Todo t4 = todoRepository.save(new Todo(null, "Read 5 pages", p1));
+
+        Todo t1 = todoRepository.save(new Todo(null, "Read 5 pages", p1, null));
+        Todo t2 = todoRepository.save(new Todo(null, "Read 6 pages", p2, null));
+        Todo t3 = todoRepository.save(new Todo(null, "Read 8 pages", p1, null));
+        Todo t4 = todoRepository.save(new Todo(null, "Read 5 pages", p1, null));
 
         Set<Todo> listTodo = new HashSet<Todo>();
         listTodo.add(t1);
         listTodo.add(t2);
         listTodo.add(t3);
         listTodo.add(t4);
+
+        Assignment assignment1 = assignmentRepository.save(new Assignment(null, enrollment2, t1, true));
+        Assignment assignment2 = assignmentRepository.save(new Assignment(null, enrollment2, t2, true));
+        Assignment assignment3 = assignmentRepository.save(new Assignment(null, enrollment2, t3, true));
+        Assignment assignment4 = assignmentRepository.save(new Assignment(null, enrollment1, t4, true));
+        Assignment assignment5 = assignmentRepository.save(new Assignment(null, enrollment3, t4, true));
+
         System.out.println(p1.toString());
     }
 }

@@ -1,23 +1,23 @@
 type Query {
     fetchAllProfessors:[Professor]
-    fetchProfessorById(professorAiid:Int!):Professor
+    fetchProfessorById(id:Int!):Professor
     fetchProfessorByName(fullName:String!):[Professor]
 
     fetchAllTodos:[Todo]
-    fetchTodoById(todoAiid:Int!):Todo
+    fetchTodoById(id:Int!):Todo
 
     fetchAllStudents:[Student]
-    fetchStudentById(studentAiid:Int!):Student
+    fetchStudentById(id:Int!):Student
     fetchStudentByName(fullName:String!):[Student]
 
     fetchAllStudentGrades:[StudentGrade]
     fetchStudentGradeById(id:Int!):StudentGrade
 
     fetchAllGrades:[Grade]
-    fetchGradeById(GradeAiid:Int!):Grade
+    fetchGradeById(id:Int!):Grade
 
     fetchAllSubjects:[Subject]
-    fetchSubjectById(subjectAiid:Int!):Subject
+    fetchSubjectById(id:Int!):Subject
     fetchSubjectByName(name:String!):[Subject]
 }
 
@@ -27,6 +27,7 @@ type Professor {
     email : String
     phone : String
     todos : [Todo]
+    subjects : [Subject]
 }
 
 type Todo {
@@ -43,47 +44,66 @@ type Student {
     registrations : [StudentGrade]
 }
 
-type Grade {
-    gradeAiid : ID
-}
-#
 type StudentGrade {
     registrationAiid : ID
     student : Student
     grade : Grade
-    subjects : [Subject]
+    enrollments : [Enrollment]
+}
+
+type Grade {
+    gradeAiid : ID
+    gradeName : String
+}
+
+type Enrollment {
+    enrollmentAiid : ID
+    studentGrade : StudentGrade
+    subject : Subject
+    assignments : [Assignment]
 }
 
 type Subject {
     subjectAiid : ID
     subjectName : String
     professors : [Professor]
+    enrollments : [Enrollment]
+
 }
 
-##type Mutation {
-##    addStudent(student : StudentInput): Student
-##    addProfessor(Professor : ProfessorInput): Professor
-###    addTodo(Todo : TodoInput): Todo
-##}
-##
-##input ProfessorInput {
-##    professorAiid : ID
-##    fullName : String
-##    email : String
-##    phone : String
-##}
-##
-##input StudentInput {
-##    studentAiid : ID
-##    fullName : String
-##    email : String
-##    phone : String
-##    todos : [TodoInput]
-##}
-##
-##input TodoInput {
-##    todoAiid : ID
-##    description : String
-###    professor : ProfessorInput
-##}
-#
+type Assignment {
+    assignementAiid : ID
+    enrollment : Enrollment
+    todo : Todo
+    isDone : Boolean
+}
+
+type Mutation {
+    addStudent(student : StudentInput): Student
+    addProfessor(professor : ProfessorInput): Professor
+    addGrade(grade : GradeInput): Grade
+    addTodo(todo : TodoInput): Todo
+}
+input ProfessorInput {
+    professorAiid : ID
+    fullName : String
+    email : String
+    phone : String
+}
+input StudentInput {
+    studentAiid : ID
+    fullName : String
+    email : String
+    phone : String
+}
+
+input GradeInput {
+    gradeAiid : ID
+    gradeName : String
+}
+
+input TodoInput {
+    todoAiid : ID
+    description : String
+    #    professor : ProfessorInput
+}

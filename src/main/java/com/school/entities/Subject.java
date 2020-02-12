@@ -20,9 +20,12 @@ public class Subject {
 
     private String subjectName;
 
-    @ManyToMany
-    private Set<StudentGrade> stdGrades;
+//    @ManyToMany
+//    private Set<StudentGrade> stdGrades;
 
     @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
     private Set<Professor> professors;
+
+    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
+    private Set<Enrollment> enrollments;
 }

@@ -19,6 +19,8 @@ public class Grade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gradeAiid;
 
+    private String gradeName;
+
     @OneToMany(mappedBy = "grade")
     private Set<StudentGrade> registrations;
 }

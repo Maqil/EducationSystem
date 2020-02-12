@@ -23,7 +23,7 @@ public class Professor {
     private String email;
     private String phone;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Subject> subjects;
 
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)

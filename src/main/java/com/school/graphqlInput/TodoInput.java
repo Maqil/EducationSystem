@@ -16,9 +16,9 @@ public class TodoInput {
 
     private Integer todoAiid;
     private String description;
-    private Professor professor;
+//    private Professor professor;
 
     public Todo toTodo(){
-        return Todo.builder().todoAiid(this.todoAiid).description(this.description).professor(this.professor).build();
+        return Todo.builder().todoAiid(this.todoAiid).description(this.description).build();
     }
 }

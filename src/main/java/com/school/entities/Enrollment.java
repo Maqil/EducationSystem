@@ -3,25 +3,25 @@ package com.school.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
-@Getter
 @Setter
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString
-public class Todo {
+public class Enrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer todoAiid;
-    private String description;
+    private Integer enrollmentAiid;
 
     @ManyToOne
-    private Professor professor;
+    private StudentGrade studentGrade;
 
-    @OneToMany(mappedBy = "todo", fetch = FetchType.EAGER)
+    @ManyToOne
+    private Subject subject;
+
+    @OneToMany(mappedBy = "enrollment", fetch = FetchType.EAGER)
     private Set<Assignment> assignments;
 }

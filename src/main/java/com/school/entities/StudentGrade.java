@@ -3,7 +3,6 @@ package com.school.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.JoinColumn;
 import java.util.Set;
 
 @Getter
@@ -24,6 +23,9 @@ public class StudentGrade {
     @ManyToOne
     private Grade grade;
 
-    @ManyToMany(mappedBy = "stdGrades", fetch = FetchType.EAGER)
-    private Set<Subject> subjects;
+//    @ManyToMany(mappedBy = "stdGrades", fetch = FetchType.EAGER)
+//    private Set<Subject> subjects;
+
+    @OneToMany(mappedBy = "studentGrade", fetch = FetchType.EAGER)
+    private Set<Enrollment> enrollments;
 }
