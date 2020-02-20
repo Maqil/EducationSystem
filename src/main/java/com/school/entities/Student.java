@@ -1,6 +1,7 @@
 package com.school.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.school.repository.StudentRepository;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Student {
     private String phone;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Set<StudentGrade> registrations;
 
     @ManyToOne

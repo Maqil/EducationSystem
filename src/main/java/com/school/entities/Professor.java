@@ -27,6 +27,7 @@ public class Professor {
 //    private Set<Subject> subjects;
 
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Set<Todo> todos;
 
     @ManyToOne

@@ -6,6 +6,7 @@ import com.school.entities.*;
 import com.school.graphqlInput.*;
 import com.school.repository.*;
 
+import graphql.GraphQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,8 @@ public class Mutation implements GraphQLMutationResolver {
     SubjectRepository subjectRepository;
     @Autowired
     TodoRepository todoRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public Professor addProfessor(ProfessorInput professorInput) {
         return professorRepository.save(professorInput.toProfessor());

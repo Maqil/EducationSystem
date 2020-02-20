@@ -5,10 +5,13 @@ import com.school.entities.*;
 import com.school.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Component
+@RestController
 public class Query implements GraphQLQueryResolver {
     @Autowired
     AdminRepository adminRepository;
@@ -54,6 +57,7 @@ public class Query implements GraphQLQueryResolver {
 
     //    Student
     public List<Student> fetchAllStudents() {
+
         return studentRepository.findAll();
     }
 
