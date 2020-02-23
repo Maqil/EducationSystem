@@ -3,6 +3,7 @@ package com.school.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = User.class)
 public class User implements Serializable {
 
@@ -20,7 +20,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column( length = 50, unique = true)
+    @Column(length = 50, unique = true)
     private String username;
 
     @JsonIgnore
@@ -33,17 +33,13 @@ public class User implements Serializable {
     @Column(length = 50)
     private String lastname;
 
-    @Column( length = 50)
+    @Column(length = 50)
     private String email;
-
-
 
     private String token;
 
-
     @NotNull
     private Boolean enabled;
-
 
     @ManyToOne
     private Role role;
@@ -62,7 +58,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String username, String password, String firstname, String lastname, String email,Boolean enabled,Role role) {
+    public User(String username, String password, String firstname, String lastname, String email, Boolean enabled, Role role) {
         this.username = username;
         this.password = password;
         this.firstname = firstname;
@@ -70,6 +66,16 @@ public class User implements Serializable {
         this.email = email;
         this.enabled = enabled;
         this.role = role;
+    }
+
+    public User(String username, String password, String firstname, String lastname, String email, Boolean enabled, List<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.enabled = enabled;
+        this.roles = roles;
     }
 
     public User(String username, String password) {
@@ -180,5 +186,6 @@ public class User implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
+
 }
 

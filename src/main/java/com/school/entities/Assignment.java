@@ -4,11 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 public class Assignment {
     @Id

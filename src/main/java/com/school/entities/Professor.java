@@ -8,11 +8,12 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
+@Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 public class Professor {
 

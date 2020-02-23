@@ -43,8 +43,15 @@ public class DemoApplication implements CommandLineRunner {
 
         Role r1 = roleRepository.save(new Role(RoleName.ROLE_ADMIN));
         Role r2 = roleRepository.save(new Role(RoleName.ROLE_USER));
-        userRepository.save(new User("admin","admin","Sd1","sd","sd",true,r1));
+
+        List<Role> listRoles = new ArrayList<Role>();
+        listRoles.add(r1);
+        listRoles.add(r2);
+        User user1  = userRepository.save(new User("adminA","adminA","Sd1","sd","sd",true,listRoles));
         userRepository.save(new User("user","user","Sd2","sd","sd",true,r2));
+
+//        System.out.println(user1.getBeautifyRoleName());
+//        System.out.println(user1);
 
         Admin admin = adminRepository.save(new Admin(null, "Dr1_Gr2", null, null, null, null));
 

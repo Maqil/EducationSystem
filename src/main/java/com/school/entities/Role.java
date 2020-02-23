@@ -7,14 +7,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role implements Serializable{
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -22,10 +21,6 @@ public class Role implements Serializable{
     @NotNull
     @Enumerated(EnumType.STRING)
     private RoleName name;
-
-    //@JsonIgnore
-    //@OneToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    //private List<User> users;
 
     public Role() {}
     
@@ -48,13 +43,4 @@ public class Role implements Serializable{
     public void setName(RoleName name) {
         this.name = name;
     }
-
-    /*public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }*/
-
 }
