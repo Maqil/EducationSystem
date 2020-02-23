@@ -13,6 +13,11 @@ import java.util.*;
 public class DemoApplication implements CommandLineRunner {
 
     @Autowired
+    UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
     AdminRepository adminRepository;
     @Autowired
     StudentRepository studentRepository;
@@ -22,8 +27,6 @@ public class DemoApplication implements CommandLineRunner {
     SubjectRepository subjectRepository;
     @Autowired
     StudentGradeRepository studentGradeRepository;
-//    @Autowired
-//    EnrollmentRepository enrollmentRepository;
     @Autowired
     ProfessorRepository professorRepository;
     @Autowired
@@ -38,19 +41,35 @@ public class DemoApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Admin admin = adminRepository.save(new Admin(null, "Dr1_Gr2",null,null,null,null));
+        Role r1 = roleRepository.save(new Role(RoleName.ROLE_ADMIN));
+        Role r2 = roleRepository.save(new Role(RoleName.ROLE_USER));
 
-        Student s1 = studentRepository.save(new Student(null, "Ziyad Maqil", "Ziyad@gmail.com", "+212453445", null,admin));
-        Student s2 = studentRepository.save(new Student(null, "Wert Jelly", "Jelly@gmail.com", "+212233445", null,admin));
-        Student s3 = studentRepository.save(new Student(null, "bart Simpson", "simpson@gmail.com", "+212453445", null,admin));
+        List<Role> listRoles = new ArrayList<Role>();
+        listRoles.add(r1);
+        listRoles.add(r2);
+        User user1  = userRepository.save(new User("adminA","adminA","Sd1","sd","sd",true,listRoles));
+        userRepository.save(new User("user","user","Sd2","sd","sd",true,r2));
 
-        Grade g1 = gradeRepository.save(new Grade(null, "CP", null,admin));
-        Grade g2 = gradeRepository.save(new Grade(null, "CE1", null,admin));
-        Grade g3 = gradeRepository.save(new Grade(null, "CE2", null,admin));
+//        System.out.println(user1.getBeautifyRoleName());
+//        System.out.println(user1);
 
-        Subject sbj1 = subjectRepository.save(new Subject(null, "Fr1", null,admin));
-        Subject sbj2 = subjectRepository.save(new Subject(null, "Math1", null,admin));
-        Subject sbj3 = subjectRepository.save(new Subject(null, "Bio1", null,admin));
+        Admin admin = adminRepository.save(new Admin(null, "Dr1_Gr2", null, null, null, null));
+
+//        Student s1 = studentRepository.save(new Student(null, "Ziyad Maqil", "Ziyad@gmail.com", "+212453445", null,admin));
+//        Student s2 = studentRepository.save(new Student(null, "Wert Jelly", "Jelly@gmail.com", "+212233445", null,admin));
+//        Student s3 = studentRepository.save(new Student(null, "bart Simpson", "simpson@gmail.com", "+212453445", null,admin));
+
+        Student s1 = studentRepository.save(new Student(null, "Ziyad Maqil", "Ziyad@gmail.com", "+212453445", null, admin));
+        Student s2 = studentRepository.save(new Student(null, "Wert Jelly", "Jelly@gmail.com", "+212233445", null, admin));
+        Student s3 = studentRepository.save(new Student(null, "bart Simpson", "simpson@gmail.com", "+212453445", null, admin));
+
+        Grade g1 = gradeRepository.save(new Grade(null, "CP", null, admin));
+        Grade g2 = gradeRepository.save(new Grade(null, "CE1", null, admin));
+        Grade g3 = gradeRepository.save(new Grade(null, "CE2", null, admin));
+
+        Subject sbj1 = subjectRepository.save(new Subject(null, "Fr1", null, admin));
+        Subject sbj2 = subjectRepository.save(new Subject(null, "Math1", null, admin));
+        Subject sbj3 = subjectRepository.save(new Subject(null, "Bio1", null, admin));
 
         Set<Subject> listSbj = new HashSet<Subject>();
         listSbj.add(sbj1);
@@ -70,15 +89,15 @@ public class DemoApplication implements CommandLineRunner {
 //        Enrollment enrollment2 = enrollmentRepository.save(new Enrollment(null, stdGrd1, sbj2, null));
 //        Enrollment enrollment3 = enrollmentRepository.save(new Enrollment(null, stdGrd2, sbj3, null));
 
-        Professor p1 = professorRepository.save(new Professor(null, "Johna smith", "John@gmail.com", "+2125445", null,admin));
-        Professor p2 = professorRepository.save(new Professor(null, "aicha curry", "curry@gmail.com", "+2125445", null,admin));
-        Professor p3 = professorRepository.save(new Professor(null, "steve harr", "harr@gmail.com", "+2125445", null,admin));
+        Professor p1 = professorRepository.save(new Professor(null, "Johna smith", "John@gmail.com", "+2125445", null, admin));
+        Professor p2 = professorRepository.save(new Professor(null, "aicha curry", "curry@gmail.com", "+2125445", null, admin));
+        Professor p3 = professorRepository.save(new Professor(null, "steve harr", "harr@gmail.com", "+2125445", null, admin));
 
 
-        Todo t1 = todoRepository.save(new Todo(null, "Read 5 pages", p1, sbj1,null));
-        Todo t2 = todoRepository.save(new Todo(null, "Read 6 pages", p2, sbj1,null));
-        Todo t3 = todoRepository.save(new Todo(null, "Read 8 pages", p1, sbj3,null));
-        Todo t4 = todoRepository.save(new Todo(null, "Read 5 pages", p1, sbj3,null));
+        Todo t1 = todoRepository.save(new Todo(null, "Read 5 pages", p1, sbj1, null));
+        Todo t2 = todoRepository.save(new Todo(null, "Read 6 pages", p2, sbj1, null));
+        Todo t3 = todoRepository.save(new Todo(null, "Read 8 pages", p1, sbj3, null));
+        Todo t4 = todoRepository.save(new Todo(null, "Read 5 pages", p1, sbj3, null));
 
         Set<Todo> listTodo = new HashSet<Todo>();
         listTodo.add(t1);

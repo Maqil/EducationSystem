@@ -8,11 +8,12 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
+@Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 public class Professor {
 
@@ -27,6 +28,7 @@ public class Professor {
 //    private Set<Subject> subjects;
 
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Set<Todo> todos;
 
     @ManyToOne

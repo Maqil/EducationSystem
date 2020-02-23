@@ -1,5 +1,6 @@
 package com.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,5 +27,6 @@ public class Todo {
     private Subject subject;
 
     @OneToMany(mappedBy = "todo", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Set<Assignment> assignments;
 }

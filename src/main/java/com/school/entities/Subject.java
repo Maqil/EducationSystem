@@ -1,5 +1,6 @@
 package com.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Subject {
 //    private Set<Enrollment> enrollments;
 
     @OneToMany(mappedBy = "subject", cascade = {CascadeType.ALL})
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Set<Todo> todos;
 
     @ManyToOne
