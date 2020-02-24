@@ -4,6 +4,7 @@ package com.school.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.school.repository.StudentRepository;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -21,6 +22,11 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studentAiid;
+
+//    @GeneratedValue(generator = "uuid")
+//    @GenericGenerator(name = "uuid", strategy = "uuid2")
+//    private String studentId;
+
     private String fullName;
     private String email;
     private String phone;
@@ -31,4 +37,5 @@ public class Student {
 
     @ManyToOne
     private Admin admin;
+
 }

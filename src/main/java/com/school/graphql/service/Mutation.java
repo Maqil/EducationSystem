@@ -6,11 +6,14 @@ import com.school.repository.*;
 import com.school.security.jwt.JwtTokenUtil;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
+import io.leangen.graphql.annotations.GraphQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class Mutation {
@@ -25,12 +28,25 @@ public class Mutation {
     private TodoRepository todoRepository;
     private GradeRepository gradeRepository;
 
-    public Mutation(StudentRepository studentRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository) {
+    private RoleRepository roleRepository;
+
+    public Mutation(StudentRepository studentRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository, RoleRepository roleRepository) {
         this.studentRepository = studentRepository;
         this.professorRepository = professorRepository;
         this.gradeRepository = gradeRepository;
         this.subjectRepository = subjectRepository;
         this.todoRepository = todoRepository;
+        this.roleRepository = roleRepository;
+    }
+
+    @GraphQLMutation(name = "addRole")
+    public Role addRole(@GraphQLArgument(name = "role") Role role) {
+        return roleRepository.save(role);
+    }
+
+    @GraphQLQuery(name = "allRoles")
+    public List<Role> allRoles() {
+        return roleRepository.findAll();
     }
 
     @PreAuthorize("hasRole('ADMIN')")

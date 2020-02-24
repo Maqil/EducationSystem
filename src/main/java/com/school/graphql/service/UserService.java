@@ -1,7 +1,10 @@
 package com.school.graphql.service;
 
 
+import com.school.entities.Role;
+import com.school.entities.Student;
 import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import com.school.graphql.exception.InvalidCredentialsException;
@@ -35,19 +38,26 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    @GraphQLMutation(name = "signup")
+    public User signup(@GraphQLArgument(name = "username") String username,
+                       @GraphQLArgument(name = "password") String password,
+                       @GraphQLArgument(name = "enabled") Boolean enabled,
+                       @GraphQLArgument(name = "role") Role role) {
+        return userRepository.save(new User(username, password,enabled, role));
+    }
 
-    @GraphQLMutation(name = "signin")
-    public Optional<User> signin(@GraphQLArgument(name = "username") String username,
+
+    @GraphQLMutation(name = "signin", description = "signin")
+    public String signin(@GraphQLArgument(name = "username") String username,
                                  @GraphQLArgument(name = "password") String password) throws InvalidCredentialsException {
         Optional<User> user = userRepository.findByUsername(username);
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (user.isPresent()) {
-            System.out.println();
 //            if (encoder.matches(password, user.get().getPassword())) {
             if (user.get().getPassword().equals(password)) {
                 logger.info("success...");
-                jwtTokenUtil.generateToken(user.get().getUsername());
-                return user;
+//                jwtTokenUtil.generateToken(user.get().getUsername());
+                return jwtTokenUtil.generateToken(user.get().getUsername());
 //                return jwtTokenUtil.generateToken(user.get().getUsername());
             } else {
                 logger.info("Invalid Credentials1");

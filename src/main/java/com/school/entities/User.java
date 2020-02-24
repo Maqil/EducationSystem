@@ -3,7 +3,6 @@ package com.school.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,44 +15,23 @@ import java.util.List;
 public class User implements Serializable {
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(length = 50, unique = true)
     private String username;
-
     @JsonIgnore
-    @Column(length = 100)
     private String password;
-
-    @Column(length = 50)
     private String firstname;
-
-    @Column(length = 50)
     private String lastname;
-
-    @Column(length = 50)
     private String email;
-
     private String token;
-
     @NotNull
     private Boolean enabled;
-
     @ManyToOne
     private Role role;
-
     @Transient
     private List<Role> roles = new ArrayList();
-
     @Transient
     private String beautifyRoleName;
-
-    //Temp field used when add or update user
-    @Transient
-    private String userPassword;
-
 
     public User() {
     }
@@ -78,7 +56,11 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, Boolean enabled, Role role) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.role = role;
     }
 
     public Long getId() {
@@ -161,22 +143,20 @@ public class User implements Serializable {
         }
         if (role.getName() == RoleName.ROLE_ADMIN) {
             beautifyRoleName = "Admin";
-        } else {
+        } else if (role.getName() == RoleName.ROLE_USER) {
             beautifyRoleName = "User";
+        } else if (role.getName() == RoleName.ROLE_PROFESSOR) {
+            beautifyRoleName = "Professor";
+        } else if (role.getName() == RoleName.ROLE_STUDENT) {
+            beautifyRoleName = "Student";
+        } else {
+            beautifyRoleName = "Parent";
         }
         return beautifyRoleName;
     }
 
     public void setBeautifyRoleName(String beautifyRoleName) {
         this.beautifyRoleName = beautifyRoleName;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
     }
 
     public String getToken() {
