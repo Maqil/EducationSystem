@@ -29,7 +29,9 @@ public class Query {
     private TodoRepository todoRepository;
     private GradeRepository gradeRepository;
 
-    public Query(UserRepository userRepository, StudentRepository studentRepository, StudentGradeRepository studentGradeRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository) {
+    private RoleRepository roleRepository;
+
+    public Query(UserRepository userRepository, StudentRepository studentRepository, StudentGradeRepository studentGradeRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.studentRepository = studentRepository;
         this.studentGradeRepository = studentGradeRepository;
@@ -37,6 +39,12 @@ public class Query {
         this.gradeRepository = gradeRepository;
         this.subjectRepository = subjectRepository;
         this.todoRepository = todoRepository;
+        this.roleRepository = roleRepository;
+    }
+
+    @GraphQLQuery(name = "allRoles")
+    public List<Role> allRoles() {
+        return roleRepository.findAll();
     }
 
     @GraphQLQuery(name = "users")
@@ -91,7 +99,7 @@ public class Query {
 
     @GraphQLQuery(name = "fetchStudentByName")
     public List<Student> fetchStudentByName(@GraphQLArgument(name = "name") String name) {
-        return studentRepository.findByFullNameContains(name);
+        return studentRepository.findByUsernameContains(name);
     }
 
     //    Grade

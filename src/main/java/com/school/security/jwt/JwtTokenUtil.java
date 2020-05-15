@@ -1,5 +1,6 @@
 package com.school.security.jwt;
 
+import com.school.entities.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
@@ -26,16 +27,16 @@ public class JwtTokenUtil implements Serializable {
 
     @Value("${jwt.secret}")
     private String secret;
-    
-    private Map<String,String> userTokensMap = new HashMap();
+
+    private Map<String, String> userTokensMap = new HashMap();
 
     @Autowired
-	private UserRepository userRepository;
+    private UserRepository userRepository;
 
     public String getUsernameFromToken(String token) {
-    	//if(!getUserTokensMap().containsValue(token)) {
-    	//	throw new ExpiredJwtException(null, null, "Token has been revoked!");
-    	//}
+        //if(!getUserTokensMap().containsValue(token)) {
+        //	throw new ExpiredJwtException(null, null, "Token has been revoked!");
+        //}
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -47,51 +48,57 @@ public class JwtTokenUtil implements Serializable {
 
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
-            .setSigningKey(secret)
-            .parseClaimsJws(token)
-            .getBody();
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, Role role) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role.getName());
         return doGenerateToken(claims, username);
     }
-    
+
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         final Date createdDate = clock.now();
         String token = Jwts.builder()
-            .setClaims(claims)
-            .setSubject(subject)
-            .setIssuedAt(createdDate)
-            .signWith(SignatureAlgorithm.HS512, secret)
-            .compact();
+                .setClaims(claims)
+//                .claim("role", role)
+                .setSubject(subject)
+                .setIssuedAt(createdDate)
+                .signWith(SignatureAlgorithm.HS512, secret)
+//                .signWith(
+//                        SignatureAlgorithm.HS256,
+//                        "secret".getBytes()
+//                )
+                .compact();
         //Add token to DB
         Optional<User> user = userRepository.findByUsername(subject);
         user.get().setToken(token);
         userRepository.save(user.get());
-        
+
         getUserTokensMap().put(subject, token);
-        
+
         return token;
     }
 
     public void invalidateToken(String username) {
-    	getUserTokensMap().remove(username);
-    	//Remove token from DB
+        getUserTokensMap().remove(username);
+        //Remove token from DB
         Optional<User> user = userRepository.findByUsername(username);
         user.get().setToken("");
         userRepository.save(user.get());
     }
 
-	public Map<String, String> getUserTokensMap() {
-		//query will be called once when jwtUtil created//
-		if(userTokensMap.isEmpty()) {
-		   userRepository.findAll().forEach( (user) -> {
-			   userTokensMap.put(user.getUsername(),user.getToken());
-		   } );
-		}
-		return userTokensMap;
-	}
+    public Map<String, String> getUserTokensMap() {
+        //query will be called once when jwtUtil created//
+        if (userTokensMap.isEmpty()) {
+            userRepository.findAll().forEach((user) -> {
+                userTokensMap.put(user.getUsername(), user.getToken());
+            });
+        }
+        return userTokensMap;
+    }
 
     public Boolean isTokenValid(String token, UserDetails userDetails) {
         JwtUser user = (JwtUser) userDetails;

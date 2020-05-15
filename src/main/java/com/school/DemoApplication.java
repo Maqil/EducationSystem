@@ -1,5 +1,9 @@
 package com.school;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Date;
+
 import com.school.entities.*;
 import com.school.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.*;
+
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -51,21 +56,17 @@ public class DemoApplication implements CommandLineRunner {
         List<Role> listRoles = new ArrayList<Role>();
 //        listRoles.add(r1);
         listRoles.add(r2);
-        User user1  = userRepository.save(new User("adminA","adminA","Sd1","sd","sd",true,listRoles));
-        userRepository.save(new User("user","user","Sd2","sd","sd",true,r2));
+        User user1 = userRepository.save(new User("admin", "admin", "Sd1", "sd", "admin@gmail.com", true, r1));
+        User user2 = userRepository.save(new User("user", "user", "Sd2", "sd", "user@gmail.com", true, r2));
 
-//        System.out.println(user1.getBeautifyRoleName());
-//        System.out.println(user1);
+//        System.out.println(user2.getRole().getName());
+
 
         Admin admin = adminRepository.save(new Admin(null, "Dr1_Gr2", null, null, null, null));
 
-//        Student s1 = studentRepository.save(new Student(null, "Ziyad Maqil", "Ziyad@gmail.com", "+212453445", null,admin));
-//        Student s2 = studentRepository.save(new Student(null, "Wert Jelly", "Jelly@gmail.com", "+212233445", null,admin));
-//        Student s3 = studentRepository.save(new Student(null, "bart Simpson", "simpson@gmail.com", "+212453445", null,admin));
-
-        Student s1 = studentRepository.save(new Student(null, "Ziyad Maqil", "Ziyad@gmail.com", "+212453445", null, admin));
-        Student s2 = studentRepository.save(new Student(null, "Wert Jelly", "Jelly@gmail.com", "+212233445", null, admin));
-        Student s3 = studentRepository.save(new Student(null, "bart Simpson", "simpson@gmail.com", "+212453445", null, admin));
+        Student s1 = studentRepository.save(new Student("Ziyad Maqil", "Ziyad@gmail.com", "ziyad", true, r4, admin, null));
+//        Student s2 = studentRepository.save(new Student(null, "Wert Jelly", "Jelly@gmail.com", "+212233445", null, admin));
+//        Student s3 = studentRepository.save(new Student(null, "bart Simpson", "simpson@gmail.com", "+212453445", null, admin));
 
         Grade g1 = gradeRepository.save(new Grade(null, "CP", null, admin));
         Grade g2 = gradeRepository.save(new Grade(null, "CE1", null, admin));
@@ -81,17 +82,13 @@ public class DemoApplication implements CommandLineRunner {
         listSbj.add(sbj3);
 
         StudentGrade stdGrd1 = studentGradeRepository.save(new StudentGrade(null, s1, g1, null));
-        StudentGrade stdGrd2 = studentGradeRepository.save(new StudentGrade(null, s2, g1, null));
-        StudentGrade stdGrd3 = studentGradeRepository.save(new StudentGrade(null, s3, g3, null));
+        StudentGrade stdGrd2 = studentGradeRepository.save(new StudentGrade(null, s1, g1, null));
+        StudentGrade stdGrd3 = studentGradeRepository.save(new StudentGrade(null, s1, g3, null));
 
         Set<StudentGrade> listStdGrd = new HashSet<StudentGrade>();
-        listStdGrd.add(stdGrd1);
-        listStdGrd.add(stdGrd2);
-        listStdGrd.add(stdGrd3);
-
-//        Enrollment enrollment1 = enrollmentRepository.save(new Enrollment(null, stdGrd1, sbj1, null));
-//        Enrollment enrollment2 = enrollmentRepository.save(new Enrollment(null, stdGrd1, sbj2, null));
-//        Enrollment enrollment3 = enrollmentRepository.save(new Enrollment(null, stdGrd2, sbj3, null));
+//        listStdGrd.add(stdGrd1);
+//        listStdGrd.add(stdGrd2);
+//        listStdGrd.add(stdGrd3);
 
         Professor p1 = professorRepository.save(new Professor(null, "Johna smith", "John@gmail.com", "+2125445", null, admin));
         Professor p2 = professorRepository.save(new Professor(null, "aicha curry", "curry@gmail.com", "+2125445", null, admin));
@@ -116,6 +113,6 @@ public class DemoApplication implements CommandLineRunner {
         Assignment assignment5 = assignmentRepository.save(new Assignment(null, stdGrd3, t4, false));
 
 
-        System.out.println(p1.toString());
+//        System.out.println(p1.toString());
     }
 }

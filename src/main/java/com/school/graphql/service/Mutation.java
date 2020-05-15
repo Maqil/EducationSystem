@@ -12,10 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @Service
+@CrossOrigin(origins = "http://localhost:3000")
 public class Mutation {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -28,30 +30,19 @@ public class Mutation {
     private TodoRepository todoRepository;
     private GradeRepository gradeRepository;
 
-    private RoleRepository roleRepository;
-
-    public Mutation(StudentRepository studentRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository, RoleRepository roleRepository) {
+    public Mutation(StudentRepository studentRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository) {
         this.studentRepository = studentRepository;
         this.professorRepository = professorRepository;
         this.gradeRepository = gradeRepository;
         this.subjectRepository = subjectRepository;
         this.todoRepository = todoRepository;
-        this.roleRepository = roleRepository;
     }
 
-    @GraphQLMutation(name = "addRole")
-    public Role addRole(@GraphQLArgument(name = "role") Role role) {
-        return roleRepository.save(role);
-    }
-
-    @GraphQLQuery(name = "allRoles")
-    public List<Role> allRoles() {
-        return roleRepository.findAll();
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
+    @CrossOrigin(origins = "http://localhost:3000")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GraphQLMutation(name = "addStudent")
     public Student addStudent(@GraphQLArgument(name = "student") Student student) {
+        System.out.println(student);
         return studentRepository.save(student);
     }
 

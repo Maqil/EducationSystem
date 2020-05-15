@@ -15,7 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Optional;
 
@@ -38,27 +40,31 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GraphQLMutation(name = "signup")
     public User signup(@GraphQLArgument(name = "username") String username,
+                       @GraphQLArgument(name = "email") String email,
                        @GraphQLArgument(name = "password") String password,
                        @GraphQLArgument(name = "enabled") Boolean enabled,
                        @GraphQLArgument(name = "role") Role role) {
-        return userRepository.save(new User(username, password,enabled, role));
+        return userRepository.save(new User(username, email, password, enabled, role));
     }
 
 
     @GraphQLMutation(name = "signin", description = "signin")
-    public String signin(@GraphQLArgument(name = "username") String username,
-                                 @GraphQLArgument(name = "password") String password) throws InvalidCredentialsException {
-        Optional<User> user = userRepository.findByUsername(username);
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    public String signin(@GraphQLArgument(name = "email") String email,
+                         @GraphQLArgument(name = "password") String password) throws InvalidCredentialsException {
+//        Optional<User> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByEmail(email);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        System.out.println(user.get().getRole().getName());
+//        System.out.println(user.get().getBeautifyRoleName());
         if (user.isPresent()) {
 //            if (encoder.matches(password, user.get().getPassword())) {
             if (user.get().getPassword().equals(password)) {
                 logger.info("success...");
-//                jwtTokenUtil.generateToken(user.get().getUsername());
-                return jwtTokenUtil.generateToken(user.get().getUsername());
-//                return jwtTokenUtil.generateToken(user.get().getUsername());
+                return jwtTokenUtil.generateToken(user.get().getUsername(), user.get().getRole());
             } else {
                 logger.info("Invalid Credentials1");
                 throw new InvalidCredentialsException("Invalid Credentials!");

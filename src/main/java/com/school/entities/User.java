@@ -3,6 +3,7 @@ package com.school.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,19 +13,22 @@ import java.util.List;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = User.class)
+@Inheritance(strategy = InheritanceType.JOINED)
+@ToString
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
-    @JsonIgnore
+    //    @JsonIgnore
     private String password;
     private String firstname;
     private String lastname;
     private String email;
+    private String phone;
     private String token;
-    @NotNull
+    //    @NotNull
     private Boolean enabled;
     @ManyToOne
     private Role role;
@@ -34,6 +38,16 @@ public class User implements Serializable {
     private String beautifyRoleName;
 
     public User() {
+        this.role = new Role(RoleName.ROLE_STUDENT);
+    }
+
+    public User(String firstname, String lastname, String email, String phone, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.role = new Role(RoleName.ROLE_STUDENT);
     }
 
     public User(String username, String password, String firstname, String lastname, String email, Boolean enabled, Role role) {
@@ -56,8 +70,9 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public User(String username, String password, Boolean enabled, Role role) {
+    public User(String username, String email, String password, Boolean enabled, Role role) {
         this.username = username;
+        this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.role = role;
@@ -111,6 +126,14 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -137,6 +160,14 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getBeautifyRoleName() {
         if (role == null) {
             return beautifyRoleName;
@@ -147,24 +178,16 @@ public class User implements Serializable {
             beautifyRoleName = "User";
         } else if (role.getName() == RoleName.ROLE_PROFESSOR) {
             beautifyRoleName = "Professor";
-        } else if (role.getName() == RoleName.ROLE_STUDENT) {
-            beautifyRoleName = "Student";
-        } else {
+        } else if (role.getName() == RoleName.ROLE_PARENT) {
             beautifyRoleName = "Parent";
+        } else {
+            beautifyRoleName = "Student";
         }
         return beautifyRoleName;
     }
 
     public void setBeautifyRoleName(String beautifyRoleName) {
         this.beautifyRoleName = beautifyRoleName;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
 }

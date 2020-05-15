@@ -37,7 +37,6 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
     }
 
-
     public JwtUser getJwtUser(User user) {
         return new JwtUser(
                 user.getId(),

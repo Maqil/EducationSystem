@@ -11,6 +11,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
+    Optional<User> findByEmail(String email);
+
     public List<User> findByEnabledTrue();
 
     @Query("select u from User u where u.username like :username and u.id <> :userId ")
