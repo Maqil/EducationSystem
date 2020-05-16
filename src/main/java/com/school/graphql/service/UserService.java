@@ -2,9 +2,7 @@ package com.school.graphql.service;
 
 
 import com.school.entities.Role;
-import com.school.entities.Student;
 import io.leangen.graphql.annotations.GraphQLArgument;
-import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import com.school.graphql.exception.InvalidCredentialsException;

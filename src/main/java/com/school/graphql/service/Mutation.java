@@ -1,20 +1,16 @@
 package com.school.graphql.service;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.school.entities.*;
 import com.school.repository.*;
 import com.school.security.jwt.JwtTokenUtil;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
-import io.leangen.graphql.annotations.GraphQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
-import java.util.List;
 
 @Service
 @CrossOrigin(origins = "http://localhost:3000")
@@ -24,14 +20,14 @@ public class Mutation {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    private StudentRepository studentRepository;
+    private EnrollmentRepository enrollmentRepository;
     private ProfessorRepository professorRepository;
     private SubjectRepository subjectRepository;
     private TodoRepository todoRepository;
     private GradeRepository gradeRepository;
 
-    public Mutation(StudentRepository studentRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository) {
-        this.studentRepository = studentRepository;
+    public Mutation(EnrollmentRepository enrollmentRepository, ProfessorRepository professorRepository, SubjectRepository subjectRepository, TodoRepository todoRepository, GradeRepository gradeRepository) {
+        this.enrollmentRepository = enrollmentRepository;
         this.professorRepository = professorRepository;
         this.gradeRepository = gradeRepository;
         this.subjectRepository = subjectRepository;
@@ -40,10 +36,10 @@ public class Mutation {
 
     @CrossOrigin(origins = "http://localhost:3000")
 //    @PreAuthorize("hasRole('ADMIN')")
-    @GraphQLMutation(name = "addStudent")
-    public Student addStudent(@GraphQLArgument(name = "student") Student student) {
-        System.out.println(student);
-        return studentRepository.save(student);
+    @GraphQLMutation(name = "addEnrollment")
+    public Enrollment addEnrollment(@GraphQLArgument(name = "enrollment") Enrollment enrollment) {
+        System.out.println(enrollment);
+        return enrollmentRepository.save(enrollment);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

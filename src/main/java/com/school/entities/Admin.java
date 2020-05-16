@@ -1,10 +1,8 @@
 package com.school.entities;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @Setter
@@ -37,5 +35,5 @@ public class Admin {
     private Set<Subject> subjectSet;
 
     @OneToMany(mappedBy = "admin", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Student> studentSet;
+    private Set<Enrollment> enrollmentSet;
 }

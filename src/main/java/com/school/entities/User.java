@@ -32,7 +32,7 @@ public class User implements Serializable {
     private Boolean enabled;
     @ManyToOne
     private Role role;
-    @Transient
+        @Transient
     private List<Role> roles = new ArrayList();
     @Transient
     private String beautifyRoleName;
@@ -41,15 +41,16 @@ public class User implements Serializable {
         this.role = new Role(RoleName.ROLE_STUDENT);
     }
 
-    public User(String firstname, String lastname, String email, String phone, String password) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-        this.role = new Role(RoleName.ROLE_STUDENT);
-    }
-
+    //
+//    public User(String firstname, String lastname, String email, String phone, String password) {
+//        this.firstname = firstname;
+//        this.lastname = lastname;
+//        this.email = email;
+//        this.phone = phone;
+//        this.password = password;
+//        this.role = new Role(RoleName.ROLE_STUDENT);
+//    }
+//
     public User(String username, String password, String firstname, String lastname, String email, Boolean enabled, Role role) {
         this.username = username;
         this.password = password;
@@ -70,8 +71,8 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public User(String username, String email, String password, Boolean enabled, Role role) {
-        this.username = username;
+    public User(String firstname, String email, String password, Boolean enabled, Role role) {
+        this.firstname = firstname;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
@@ -142,15 +143,15 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    public List<Role> getRoles() {
-        roles.clear();
-        roles.add(role);
-        return roles;
-    }
+//    public List<Role> getRoles() {
+//        roles.clear();
+//        roles.add(role);
+//        return roles;
+//    }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
+//    public void setRoles(List<Role> roles) {
+//        this.roles = roles;
+//    }
 
     public Role getRole() {
         return role;

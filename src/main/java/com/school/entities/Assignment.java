@@ -17,7 +17,7 @@ public class Assignment {
     private Integer assignementAiid;
 
     @ManyToOne
-    private StudentGrade studentGrade;
+    private Student student;
 
     @ManyToOne
     private Todo todo;

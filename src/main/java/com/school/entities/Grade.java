@@ -1,6 +1,5 @@
 package com.school.entities;
 
-import com.school.repository.StudentRepository;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +21,7 @@ public class Grade {
     private String gradeName;
 
     @OneToMany(mappedBy = "grade")
-    private Set<StudentGrade> registrations;
+    private Set<Student> registrations;
 
     @ManyToOne
     private Admin admin;
