@@ -69,10 +69,10 @@ public class Query {
         return professorRepository.findById(id).get();
     }
 
-    @GraphQLQuery(name = "fetchProfessorByName")
-    public List<Professor> fetchProfessorByName(@GraphQLArgument(name = "name") String name) {
-        return professorRepository.findByFullNameContains(name);
-    }
+//    @GraphQLQuery(name = "fetchProfessorByName")
+//    public List<Professor> fetchProfessorByName(@GraphQLArgument(name = "name") String name) {
+//        return professorRepository.findByFullNameContains(name);
+//    }
 
     //    Todo
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")

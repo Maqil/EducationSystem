@@ -5,27 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Professor {
+public class Professor extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer professorAiid;
-    private String fullName;
-    private String email;
-    private String phone;
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    private Set<Subject> subjects;
 
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
@@ -33,4 +23,13 @@ public class Professor {
 
     @ManyToOne
     private Admin admin;
+
+    public Professor(){
+
+    }
+
+    public Professor(String username, String email, String password, String firstname, String lastname, Boolean enabled) {
+        super(username, email, password, firstname, lastname, enabled, new Role(3L));
+        System.out.println(email);
+    }
 }

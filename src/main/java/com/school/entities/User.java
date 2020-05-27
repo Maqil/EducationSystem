@@ -1,15 +1,11 @@
 package com.school.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = User.class)
@@ -21,60 +17,40 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
+    private String email;
     //    @JsonIgnore
     private String password;
     private String firstname;
     private String lastname;
-    private String email;
     private String phone;
     private String token;
     //    @NotNull
     private Boolean enabled;
     @ManyToOne
     private Role role;
-        @Transient
-    private List<Role> roles = new ArrayList();
+    //        @Transient
+//    private List<Role> roles = new ArrayList();
     @Transient
     private String beautifyRoleName;
 
     public User() {
-        this.role = new Role(RoleName.ROLE_STUDENT);
+
     }
 
-    //
-//    public User(String firstname, String lastname, String email, String phone, String password) {
-//        this.firstname = firstname;
-//        this.lastname = lastname;
-//        this.email = email;
-//        this.phone = phone;
-//        this.password = password;
-//        this.role = new Role(RoleName.ROLE_STUDENT);
-//    }
-//
-    public User(String username, String password, String firstname, String lastname, String email, Boolean enabled, Role role) {
+    public User(String username, String email, String password, String firstname, String lastname, Boolean enabled, Role role) {
         this.username = username;
+        this.email = email;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.email = email;
         this.enabled = enabled;
         this.role = role;
     }
 
-    public User(String username, String password, String firstname, String lastname, String email, Boolean enabled, List<Role> roles) {
-        this.username = username;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.enabled = enabled;
-        this.roles = roles;
-    }
-
-    public User(String firstname, String email, String password, Boolean enabled, Role role) {
-        this.firstname = firstname;
+    public User(String email, String password, String firstname, Boolean enabled, Role role) {
         this.email = email;
         this.password = password;
+        this.firstname = firstname;
         this.enabled = enabled;
         this.role = role;
     }
@@ -93,6 +69,14 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -117,14 +101,6 @@ public class User implements Serializable {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhone() {

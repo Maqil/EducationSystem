@@ -35,17 +35,18 @@ public class Mutation {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GraphQLMutation(name = "addEnrollment")
     public Enrollment addEnrollment(@GraphQLArgument(name = "enrollment") Enrollment enrollment) {
-        System.out.println(enrollment);
-        return enrollmentRepository.save(enrollment);
+        System.out.println(enrollment.getEmail());
+        return enrollmentRepository.save(new Enrollment(enrollment.getUsername(), enrollment.getEmail(), enrollment.getPassword(), enrollment.getFirstname(), enrollment.getLastname(), enrollment.getEnabled()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GraphQLMutation(name = "addProfessor")
     public Professor addProfessor(@GraphQLArgument(name = "professor") Professor professor) {
-        return professorRepository.save(professor);
+        System.out.println(professor.getEmail());
+        return professorRepository.save(new Professor(professor.getUsername(), professor.getEmail(), professor.getPassword(), professor.getFirstname(), professor.getLastname(), professor.getEnabled()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -60,7 +61,7 @@ public class Mutation {
         return subjectRepository.save(subject);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @GraphQLMutation(name = "addTodo")
     public Todo addTodo(@GraphQLArgument(name = "todo") Todo todo) {
         return todoRepository.save(todo);
